@@ -18,34 +18,37 @@ html, body, [class*="css"] {
     font-family: 'Segoe UI', sans-serif;
 }
 
+/* Main app background */
 .stApp {
     background:
-    radial-gradient(circle at top left, rgba(56,189,248,0.18), transparent 35%),
-    radial-gradient(circle at top right, rgba(239,68,68,0.18), transparent 30%),
-    linear-gradient(135deg, #020617 0%, #0f172a 45%, #111827 100%) !important;
-    color: #ffffff !important;
+    radial-gradient(circle at top left, rgba(56,189,248,0.14), transparent 35%),
+    radial-gradient(circle at top right, rgba(239,68,68,0.14), transparent 30%),
+    var(--background-color) !important;
+    color: var(--text-color) !important;
 }
 
+/* Streamlit header */
 [data-testid="stHeader"] {
-    background: rgba(2, 6, 23, 0.85) !important;
+    background: rgba(0, 0, 0, 0.08) !important;
 }
 
+/* Hero */
 .hero {
     padding: 38px;
     border-radius: 25px;
     background:
-    linear-gradient(135deg, rgba(15,23,42,0.96), rgba(30,41,59,0.86)),
+    linear-gradient(135deg, rgba(15,23,42,0.88), rgba(30,41,59,0.72)),
     url("https://images.unsplash.com/photo-1601597111158-2fceff292cdc?auto=format&fit=crop&w=1400&q=80");
     background-size: cover;
     background-position: center;
-    border: 1px solid #334155;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    border: 1px solid rgba(148,163,184,0.45);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
 }
 
 .hero-title {
     font-size: 48px;
     font-weight: 900;
-    color: #ffffff;
+    color: #ffffff !important;
     line-height: 1.05;
     margin-bottom: 6px;
     word-break: keep-all;
@@ -54,7 +57,7 @@ html, body, [class*="css"] {
 .hero-ai {
     font-size: 27px;
     font-weight: 800;
-    color: #38bdf8;
+    color: #38bdf8 !important;
     line-height: 1.25;
     margin-bottom: 12px;
     max-width: 900px;
@@ -62,7 +65,7 @@ html, body, [class*="css"] {
 
 .hero-subtitle {
     font-size: 19px;
-    color: #cbd5e1;
+    color: #e2e8f0 !important;
     max-width: 850px;
     line-height: 1.6;
 }
@@ -72,101 +75,180 @@ html, body, [class*="css"] {
     padding: 8px 16px;
     background: rgba(250, 204, 21, 0.18);
     border: 1px solid #facc15;
-    color: #fde68a;
+    color: #fde68a !important;
     border-radius: 50px;
     font-weight: 700;
     margin-bottom: 16px;
 }
 
+/* Cards */
 .card {
     padding: 26px;
     border-radius: 20px;
-    background: linear-gradient(135deg, #111827, #1e293b);
-    border: 1px solid #334155;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.38);
+    background: var(--secondary-background-color) !important;
+    border: 1px solid rgba(148,163,184,0.35);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.18);
 }
 
 .metric-title {
-    color: #cbd5e1;
+    color: var(--text-color) !important;
+    opacity: 0.75;
     font-size: 15px;
     font-weight: 600;
 }
 
 .metric-value {
-    color: #38bdf8;
+    color: #0284c7 !important;
     font-size: 34px;
     font-weight: 900;
 }
 
 .safe {
-    color: #4ade80;
+    color: #16a34a !important;
 }
 
 .fraud {
-    color: #fb7185;
+    color: #dc2626 !important;
 }
 
 .gold {
-    color: #facc15;
+    color: #ca8a04 !important;
 }
 
+/* Info boxes */
 .info-box {
     padding: 22px;
     border-radius: 18px;
-    background: rgba(15,23,42,0.95);
-    border-left: 6px solid #38bdf8;
-    color: #e2e8f0;
+    background: var(--secondary-background-color) !important;
+    border-left: 6px solid #0284c7;
+    color: var(--text-color) !important;
     font-size: 17px;
 }
 
 .warning-box {
     padding: 22px;
     border-radius: 18px;
-    background: rgba(127,29,29,0.4);
-    border-left: 6px solid #ef4444;
-    color: #fecaca;
+    background: rgba(239,68,68,0.15) !important;
+    border-left: 6px solid #dc2626;
+    color: var(--text-color) !important;
     font-size: 17px;
 }
 
 .success-box {
     padding: 22px;
     border-radius: 18px;
-    background: rgba(20,83,45,0.4);
-    border-left: 6px solid #22c55e;
-    color: #bbf7d0;
+    background: rgba(34,197,94,0.15) !important;
+    border-left: 6px solid #16a34a;
+    color: var(--text-color) !important;
     font-size: 17px;
 }
 
-h1, h2, h3 {
-    color: white !important;
+/* Headings */
+h1, h2, h3, h4, h5, h6, p, label, span, div {
+    color: var(--text-color);
 }
 
+/* Tabs */
 .stTabs [data-baseweb="tab-list"] {
     gap: 10px;
     flex-wrap: wrap;
 }
 
 .stTabs [data-baseweb="tab"] {
-    background-color: #111827;
+    background-color: var(--secondary-background-color) !important;
     border-radius: 12px;
     padding: 12px 20px;
-    color: white;
-    border: 1px solid #334155;
+    color: var(--text-color) !important;
+    border: 1px solid rgba(148,163,184,0.35);
+}
+
+.stTabs [data-baseweb="tab"] p {
+    color: var(--text-color) !important;
 }
 
 .stTabs [aria-selected="true"] {
     background: linear-gradient(135deg, #2563eb, #dc2626) !important;
-    color: white !important;
+    color: #ffffff !important;
 }
 
+.stTabs [aria-selected="true"] p {
+    color: #ffffff !important;
+}
+
+/* Radio buttons */
+[role="radiogroup"] label {
+    background: var(--secondary-background-color) !important;
+    border: 1px solid rgba(148,163,184,0.35);
+    border-radius: 12px;
+    padding: 8px 12px;
+    margin-right: 8px;
+}
+
+[role="radiogroup"] label p {
+    color: var(--text-color) !important;
+}
+
+/* Buttons */
+.stButton > button,
+.stDownloadButton > button {
+    background: linear-gradient(135deg, #2563eb, #dc2626) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 10px 18px !important;
+    font-weight: 700 !important;
+}
+
+.stButton > button:hover,
+.stDownloadButton > button:hover {
+    transform: scale(1.02);
+    color: #ffffff !important;
+}
+
+/* File uploader */
+[data-testid="stFileUploader"] {
+    background: var(--secondary-background-color) !important;
+    border: 1px solid rgba(148,163,184,0.35);
+    border-radius: 14px;
+    padding: 14px;
+}
+
+[data-testid="stFileUploader"] * {
+    color: var(--text-color) !important;
+}
+
+/* Selectbox */
+[data-baseweb="select"] {
+    background: var(--secondary-background-color) !important;
+}
+
+[data-baseweb="select"] * {
+    color: var(--text-color) !important;
+}
+
+/* Dataframe/table area */
+[data-testid="stDataFrame"] {
+    background: var(--secondary-background-color) !important;
+    border-radius: 12px;
+}
+
+/* Plotly chart white area fix */
+.js-plotly-plot,
+.plotly,
+.plot-container {
+    background: var(--background-color) !important;
+}
+
+/* Footer */
 .footer {
     text-align: center;
     padding: 25px;
-    color: #94a3b8;
+    color: var(--text-color) !important;
+    opacity: 0.75;
     font-size: 15px;
 }
 
-/* -------- MOBILE RESPONSIVE DESIGN -------- */
+/* Mobile responsive */
 @media (max-width: 768px) {
     .hero {
         padding: 22px;
@@ -225,6 +307,12 @@ h1, h2, h3 {
         font-size: 12px;
     }
 
+    [role="radiogroup"] label {
+        display: block;
+        margin-bottom: 8px;
+        width: 100%;
+    }
+
     h1 {
         font-size: 28px !important;
     }
@@ -263,28 +351,26 @@ model = load_model()
 scaler = load_scaler()
 
 # ---------------- HERO SECTION ----------------
-# ---------------- HERO SECTION ----------------
-
 st.markdown(
 """
 <div class="hero">
 
-<div class="badge">
+<span class="badge">
 🏦 Banking Security • AI Fraud Monitoring • Risk Detection
-</div>
+</span>
 
-<div class="hero-title">
+<h1 class="hero-title">
 💳 FraudShield
-</div>
+</h1>
 
 <div class="hero-ai">
 AI Powered Credit Card Fraud Detection System
 </div>
 
-<div class="hero-subtitle">
+<p class="hero-subtitle">
 Detect suspicious credit card transactions using Machine Learning,
 Random Forest and SMOTE with real-time dashboard insights.
-</div>
+</p>
 
 </div>
 """,
@@ -298,6 +384,29 @@ tab1, tab2, tab3 = st.tabs([
     "🤖 Model Performance",
     "🚨 Fraud Prediction"
 ])
+
+# ---------------- CHART THEME FUNCTION ----------------
+def apply_chart_theme(fig, height=480):
+    fig.update_layout(
+        height=height,
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#94a3b8"),
+        title_font=dict(color="#38bdf8", size=20),
+        legend=dict(font=dict(color="#94a3b8")),
+        xaxis=dict(
+            title_font=dict(color="#94a3b8"),
+            tickfont=dict(color="#94a3b8"),
+            gridcolor="rgba(148,163,184,0.25)"
+        ),
+        yaxis=dict(
+            title_font=dict(color="#94a3b8"),
+            tickfont=dict(color="#94a3b8"),
+            gridcolor="rgba(148,163,184,0.25)"
+        )
+    )
+    return fig
+
 
 # ---------------- TAB 1 ----------------
 with tab1:
@@ -366,7 +475,8 @@ with tab1:
         color="Class",
         color_discrete_map={"Normal": "#22c55e", "Fraud": "#ef4444"}
     )
-    fig1.update_layout(template="plotly_dark", height=480)
+    fig1.update_traces(textfont_color="#ffffff")
+    fig1 = apply_chart_theme(fig1, height=480)
     st.plotly_chart(fig1, use_container_width=True)
 
     fig2 = px.histogram(
@@ -376,11 +486,12 @@ with tab1:
         title="Transaction Amount Distribution",
         color_discrete_sequence=["#38bdf8"]
     )
-    fig2.update_layout(template="plotly_dark", height=480)
+    fig2 = apply_chart_theme(fig2, height=480)
     st.plotly_chart(fig2, use_container_width=True)
 
     st.subheader("Dataset Preview")
     st.dataframe(df.head(10), use_container_width=True)
+
 
 # ---------------- TAB 2 ----------------
 with tab2:
@@ -450,41 +561,39 @@ with tab2:
         colorscale="Reds",
         text=cm,
         texttemplate="%{text}",
-        textfont={"size": 22}
+        textfont={"size": 22, "color": "#111827"}
     ))
 
-    fig_cm.update_layout(
-        title="Confusion Matrix",
-        template="plotly_dark",
-        height=500
-    )
-
+    fig_cm = apply_chart_theme(fig_cm, height=500)
+    fig_cm.update_layout(title="Confusion Matrix")
     st.plotly_chart(fig_cm, use_container_width=True)
 
     st.subheader("ROC Curve")
 
     fig_roc = go.Figure()
+
     fig_roc.add_trace(go.Scatter(
         x=[0, 0.03, 0.08, 0.15, 1],
         y=[0, 0.70, 0.86, 0.94, 1],
         mode="lines+markers",
         name="Random Forest ROC Curve",
-        line=dict(width=4)
+        line=dict(width=4, color="#2563eb"),
+        marker=dict(size=8, color="#2563eb")
     ))
+
     fig_roc.add_trace(go.Scatter(
         x=[0, 1],
         y=[0, 1],
         mode="lines",
         name="Random Guess",
-        line=dict(dash="dash")
+        line=dict(dash="dash", color="#ef4444")
     ))
 
+    fig_roc = apply_chart_theme(fig_roc, height=500)
     fig_roc.update_layout(
         title=f"ROC Curve | AUC = {roc_auc:.3f}",
         xaxis_title="False Positive Rate",
-        yaxis_title="True Positive Rate",
-        template="plotly_dark",
-        height=500
+        yaxis_title="True Positive Rate"
     )
 
     st.plotly_chart(fig_roc, use_container_width=True)
@@ -497,6 +606,7 @@ with tab2:
         "model_metrics.csv",
         "text/csv"
     )
+
 
 # ---------------- TAB 3 ----------------
 with tab3:
@@ -627,3 +737,10 @@ with tab3:
 
         if st.button("Generate Prediction"):
             predict_transactions(random_df)
+
+
+st.markdown("""
+<div class="footer">
+    FraudShield AI | Credit Card Fraud Detection using Machine Learning | Built with Streamlit
+</div>
+""", unsafe_allow_html=True)
