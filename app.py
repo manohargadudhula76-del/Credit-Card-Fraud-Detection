@@ -398,77 +398,130 @@ with tab2:
 
 # ---------------- TAB 3 ----------------
 with tab3:
-    st.header("🚨 Live Fraud Prediction")
+    st.header("🚨 Fraud Prediction Center")
 
     st.markdown("""
     <div class="info-box">
-    Upload a CSV file containing transaction features. The system will classify each transaction
-    as <b>Normal</b> or <b>Fraud</b>. This is batch prediction. In production banking systems,
-    the same model can be connected to APIs for real-time fraud detection.
+    Test the fraud detection model using CSV upload, built-in demo datasets, or a random sample transaction.
+    This makes the app easy to use on both laptop and mobile.
     </div>
     """, unsafe_allow_html=True)
 
-    uploaded_file = st.file_uploader("Upload Transaction CSV File", type=["csv"])
+    prediction_mode = st.radio(
+        "Choose Prediction Mode",
+        ["📁 Upload CSV", "🎲 Try Demo Dataset", "⚡ Random Transaction"],
+        horizontal=True
+    )
 
-    if uploaded_file is not None:
-        input_df = pd.read_csv(uploaded_file)
-
-        st.subheader("Uploaded Transactions")
-        st.dataframe(input_df.head(10), use_container_width=True)
-
+    def predict_transactions(input_df):
         missing_cols = [col for col in columns if col not in input_df.columns]
 
         if missing_cols:
             st.error(f"Missing columns: {missing_cols}")
+            return
+
+        prediction_data = input_df[columns].copy()
+        prediction_data["Amount"] = scaler.transform(prediction_data[["Amount"]])
+
+        predictions = model.predict(prediction_data)
+
+        if hasattr(model, "predict_proba"):
+            probabilities = model.predict_proba(prediction_data)[:, 1]
         else:
-            prediction_data = input_df[columns].copy()
-            prediction_data["Amount"] = scaler.transform(prediction_data[["Amount"]])
+            probabilities = [0] * len(predictions)
 
-            predictions = model.predict(prediction_data)
+        output_df = input_df.copy()
+        output_df["Prediction"] = predictions
+        output_df["Prediction_Label"] = output_df["Prediction"].map({
+            0: "Normal",
+            1: "Fraud"
+        })
+        output_df["Fraud_Probability"] = [round(p * 100, 2) for p in probabilities]
 
-            input_df["Prediction"] = predictions
-            input_df["Prediction_Label"] = input_df["Prediction"].map({
-                0: "Normal",
-                1: "Fraud"
-            })
+        st.subheader("Prediction Results")
+        st.dataframe(output_df, use_container_width=True)
 
-            st.subheader("Prediction Results")
-            st.dataframe(input_df, use_container_width=True)
+        normal_pred = (predictions == 0).sum()
+        fraud_pred = (predictions == 1).sum()
 
-            normal_pred = (predictions == 0).sum()
-            fraud_pred = (predictions == 1).sum()
+        c1, c2, c3 = st.columns(3)
 
-            c1, c2 = st.columns(2)
+        with c1:
+            st.markdown(f"""
+            <div class="card">
+                <div class="metric-title">Predicted Normal</div>
+                <div class="metric-value safe">{normal_pred}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-            with c1:
-                st.markdown(f"""
-                <div class="card">
-                    <div class="metric-title">Predicted Normal</div>
-                    <div class="metric-value safe">{normal_pred}</div>
-                </div>
-                """, unsafe_allow_html=True)
+        with c2:
+            st.markdown(f"""
+            <div class="card">
+                <div class="metric-title">Predicted Fraud</div>
+                <div class="metric-value fraud">{fraud_pred}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-            with c2:
-                st.markdown(f"""
-                <div class="card">
-                    <div class="metric-title">Predicted Fraud</div>
-                    <div class="metric-value fraud">{fraud_pred}</div>
-                </div>
-                """, unsafe_allow_html=True)
+        with c3:
+            avg_prob = round(sum(probabilities) / len(probabilities) * 100, 2)
+            st.markdown(f"""
+            <div class="card">
+                <div class="metric-title">Avg Fraud Probability</div>
+                <div class="metric-value gold">{avg_prob}%</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-            st.write("")
+        st.write("")
 
-            result_csv = input_df.to_csv(index=False).encode("utf-8")
+        result_csv = output_df.to_csv(index=False).encode("utf-8")
 
-            st.download_button(
-                "⬇️ Download Prediction Results",
-                result_csv,
-                "fraud_predictions.csv",
-                "text/csv"
-            )
+        st.download_button(
+            "⬇️ Download Prediction Results",
+            result_csv,
+            "fraud_predictions.csv",
+            "text/csv"
+        )
 
-st.markdown("""
-<div class="footer">
-    FraudShield AI | Credit Card Fraud Detection using Machine Learning | Built with Streamlit
-</div>
-""", unsafe_allow_html=True)
+    if prediction_mode == "📁 Upload CSV":
+        uploaded_file = st.file_uploader("Upload Transaction CSV File", type=["csv"])
+
+        if uploaded_file is not None:
+            input_df = pd.read_csv(uploaded_file)
+
+            st.subheader("Uploaded Transactions")
+            st.dataframe(input_df.head(10), use_container_width=True)
+
+            predict_transactions(input_df)
+
+    elif prediction_mode == "🎲 Try Demo Dataset":
+        demo_option = st.selectbox(
+            "Select Demo Dataset",
+            [
+                "Normal Transactions",
+                "Fraud Transactions",
+                "Mixed Normal + Fraud Transactions"
+            ]
+        )
+
+        demo_paths = {
+            "Normal Transactions": "demo_csv_files/demo_normal_transactions.csv",
+            "Fraud Transactions": "demo_csv_files/demo_fraud_transactions.csv",
+            "Mixed Normal + Fraud Transactions": "demo_csv_files/demo_mixed_normal_fraud.csv"
+        }
+
+        demo_df = pd.read_csv(demo_paths[demo_option])
+
+        st.subheader("Demo Dataset Preview")
+        st.dataframe(demo_df.head(10), use_container_width=True)
+
+        if st.button("Predict Demo Dataset"):
+            predict_transactions(demo_df)
+
+    elif prediction_mode == "⚡ Random Transaction":
+        random_df = df.drop("Class", axis=1).sample(1)
+
+        st.subheader("Random Transaction")
+        st.dataframe(random_df, use_container_width=True)
+
+        if st.button("Generate Prediction"):
+            predict_transactions(random_df)
