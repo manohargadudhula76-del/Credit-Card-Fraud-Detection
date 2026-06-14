@@ -34,7 +34,7 @@ html, body, [class*="css"] {
     padding: 38px;
     border-radius: 25px;
     background:
-    linear-gradient(135deg, rgba(15,23,42,0.95), rgba(30,41,59,0.85)),
+    linear-gradient(135deg, rgba(15,23,42,0.96), rgba(30,41,59,0.86)),
     url("https://images.unsplash.com/photo-1601597111158-2fceff292cdc?auto=format&fit=crop&w=1400&q=80");
     background-size: cover;
     background-position: center;
@@ -43,16 +43,28 @@ html, body, [class*="css"] {
 }
 
 .hero-title {
-    font-size: 58px;
+    font-size: 48px;
     font-weight: 900;
     color: #ffffff;
-    margin-bottom: 8px;
+    line-height: 1.05;
+    margin-bottom: 6px;
+    word-break: keep-all;
+}
+
+.hero-ai {
+    font-size: 27px;
+    font-weight: 800;
+    color: #38bdf8;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    max-width: 900px;
 }
 
 .hero-subtitle {
-    font-size: 22px;
+    font-size: 19px;
     color: #cbd5e1;
     max-width: 850px;
+    line-height: 1.6;
 }
 
 .badge {
@@ -131,6 +143,7 @@ h1, h2, h3 {
 
 .stTabs [data-baseweb="tab-list"] {
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .stTabs [data-baseweb="tab"] {
@@ -151,6 +164,78 @@ h1, h2, h3 {
     padding: 25px;
     color: #94a3b8;
     font-size: 15px;
+}
+
+/* -------- MOBILE RESPONSIVE DESIGN -------- */
+@media (max-width: 768px) {
+    .hero {
+        padding: 22px;
+        border-radius: 18px;
+        background-position: center;
+    }
+
+    .badge {
+        font-size: 11px;
+        padding: 6px 10px;
+        line-height: 1.4;
+        margin-bottom: 12px;
+    }
+
+    .hero-title {
+        font-size: 34px;
+        line-height: 1.05;
+        margin-bottom: 8px;
+    }
+
+    .hero-ai {
+        font-size: 18px;
+        line-height: 1.35;
+        margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .card {
+        padding: 18px;
+        border-radius: 16px;
+        margin-bottom: 10px;
+    }
+
+    .metric-title {
+        font-size: 13px;
+    }
+
+    .metric-value {
+        font-size: 25px;
+    }
+
+    .info-box,
+    .warning-box,
+    .success-box {
+        padding: 16px;
+        font-size: 14px;
+        border-radius: 14px;
+    }
+
+    .stTabs [data-baseweb="tab"] {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 28px !important;
+    }
+
+    h2 {
+        font-size: 24px !important;
+    }
+
+    h3 {
+        font-size: 20px !important;
+    }
 }
 </style>
 """, unsafe_allow_html=True)
@@ -178,16 +263,33 @@ model = load_model()
 scaler = load_scaler()
 
 # ---------------- HERO SECTION ----------------
-st.markdown("""
+# ---------------- HERO SECTION ----------------
+
+st.markdown(
+"""
 <div class="hero">
-    <div class="badge">🏦 Banking Security • AI Fraud Monitoring • Risk Detection</div>
-    <div class="hero-title">FraudShield AI</div>
-    <div class="hero-subtitle">
-        A professional credit card fraud detection system that analyzes transaction patterns,
-        identifies suspicious activity, and supports batch fraud prediction using Machine Learning.
-    </div>
+
+<div class="badge">
+🏦 Banking Security • AI Fraud Monitoring • Risk Detection
 </div>
-""", unsafe_allow_html=True)
+
+<div class="hero-title">
+💳 FraudShield
+</div>
+
+<div class="hero-ai">
+AI Powered Credit Card Fraud Detection System
+</div>
+
+<div class="hero-subtitle">
+Detect suspicious credit card transactions using Machine Learning,
+Random Forest and SMOTE with real-time dashboard insights.
+</div>
+
+</div>
+""",
+unsafe_allow_html=True
+)
 
 st.write("")
 
